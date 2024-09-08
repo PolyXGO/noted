@@ -1,0 +1,18 @@
+php_lines=$(find . -path './assets/js/lib' -prune -o -path './node_modules' -prune -o -path './dist' -prune -o -name '*.php' -print | xargs wc -l | awk '{ total += $1 } END { print total }')
+js_lines=$(find . -path './assets/js/lib' -prune -o -path './node_modules' -prune -o -path './dist' -prune -o -name '*.js' -print | xargs wc -l | awk '{ total += $1 } END { print total }')
+css_lines=$(find . -path './assets/js/lib' -prune -o -path './node_modules' -prune -o -path './dist' -prune -o -name '*.css' -print | xargs wc -l | awk '{ total += $1 } END { print total }')
+
+total_lines=$((php_lines + js_lines + css_lines))
+
+# Function to format a number with comma separators
+format_number() {
+  echo $1 | awk '{printf "%'\''d\n", $0}'
+}
+
+# Print the results with formatted numbers
+clear
+
+echo "PHP: $(format_number $php_lines) lines"
+echo "JS: $(format_number $js_lines) lines"
+echo "CSS: $(format_number $css_lines) lines"
+echo "Totals: $(format_number $total_lines) lines"
